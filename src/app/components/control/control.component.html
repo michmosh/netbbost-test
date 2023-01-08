@@ -1,0 +1,14 @@
+<div class="control-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <td> COLORS</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr  *ngFor="let color of colors; let index = index" (click)="changeColor(color)" draggable="true" (dragstart)="onDragStart($event , index)" (drop)="handleDragAndDrop($event , index)" (dragover)="onDragOver($event)">
+                <td>{{color}}</td>
+            </tr>
+        </tbody>
+    </table> 
+</div>
