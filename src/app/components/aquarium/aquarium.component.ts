@@ -33,12 +33,11 @@ export class AquariumComponent implements OnInit , OnDestroy {
 
     //triangle 
     if(tDirection === DIRECTION.LEFT){
-      let t1 = x-20
       this.context.beginPath();
-      this.context.moveTo(t1, y);
-      this.context.lineTo(t1-30, y + 25);
-      this.context.lineTo(t1-30, y-25);
-      this.context.lineTo(t1, y);
+      this.context.moveTo(x-20, y);
+      this.context.lineTo(x-50, y + 25);
+      this.context.lineTo(x-50, y-25);
+      this.context.lineTo(x-20, y);
       this.context.fill();
     }
     if(tDirection === DIRECTION.RIGHT ){
