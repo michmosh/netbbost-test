@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { COLORS } from 'src/app/constants';
 import { ColorChangeService } from 'src/app/services/color-change.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { ColorChangeService } from 'src/app/services/color-change.service';
   styleUrls: ['./control.component.scss']
 })
 export class ControlComponent implements OnInit {
-  colors : Array<string> = ["blue", "green" , "yellow"]
+  colors :Array<string> = COLORS  
   constructor(private colorChangeService : ColorChangeService) { }
 
   ngOnInit(): void {

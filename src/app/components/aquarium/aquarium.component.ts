@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit , ViewChild} from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { DIRECTION } from 'src/app/enums/direction.enum';
 import { ColorChangeService } from 'src/app/services/color-change.service';
 
 @Component({
@@ -21,12 +22,34 @@ export class AquariumComponent implements OnInit , OnDestroy {
     
   }
 
-  draw(x:number , y:number , z:number){
+  draw(x:number , y:number , z:number, tDirection:DIRECTION){
+
+    // ball 
     this.context.clearRect(0 , 0, this.context.canvas.width , this.context.canvas.height )
     this.context.beginPath()
     this.context.arc(x , y , z, 0, 2 * Math.PI);
     this.context.fillStyle = this.fishColor;
     this.context.fill()
+
+    //triangle 
+    if(tDirection === DIRECTION.LEFT){
+      let t1 = x-20
+      this.context.beginPath();
+      this.context.moveTo(t1, y);
+      this.context.lineTo(t1-30, y + 25);
+      this.context.lineTo(t1-30, y-25);
+      this.context.lineTo(t1, y);
+      this.context.fill();
+    }
+    if(tDirection === DIRECTION.RIGHT ){
+      this.context.beginPath();
+      this.context.moveTo(x+20, y);
+      this.context.lineTo(x+50, y + 25);
+      this.context.lineTo(x+50, y-25);
+      this.context.lineTo(x+20, y);
+      this.context.fill();
+    }
+
   }
 
   animate(){
@@ -36,14 +59,22 @@ export class AquariumComponent implements OnInit , OnDestroy {
     // RANDOM SPEED FOR X AND Y
     let xVel = Math.round(Math.random() * 100) / 10
     let yVel = Math.round(Math.random() * 100) / 10
+    let tDirection = x +20 >=this.context.canvas.width -20 ? DIRECTION.RIGHT : DIRECTION.LEFT
       setInterval(()=>{
-        this.draw(x , y , 20)
-        if(x +20 > this.context.canvas.width  ) xVel = -xVel
+        this.draw(x , y , 20, tDirection)
+        if(x +20 > this.context.canvas.width  ){
+           xVel = -xVel
+           tDirection =  DIRECTION.RIGHT
+        }
         if(y +20 > this.context.canvas.height ) yVel = -yVel
         if(y < 20) yVel = -yVel
-        if(x < 20) xVel = -xVel
+        if(x < 20){
+           xVel = -xVel
+           tDirection = DIRECTION.LEFT
+        }
         x+=xVel
         y+=yVel
+  
       }, 100)
        
   }
